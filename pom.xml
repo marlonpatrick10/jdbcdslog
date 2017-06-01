@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.googlecode.usc</groupId>
     <artifactId>jdbcdslog</artifactId>
-    <version>1.0.6.2</version>
+    <version>1.0.6.2-enhanced</version>
     <packaging>jar</packaging>
     <name>jdbcdslog</name>
     <url>http://code.google.com/p/jdbcdslog-exp/</url>
@@ -125,7 +125,7 @@
                     <target>1.5</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <fork>true</fork>
-                    <executable>${JAVA_1_5_HOME}/bin/javac</executable>
+                    <!-- <executable>${JAVA_1_5_HOME}/bin/javac</executable>  -->
                     <compilerVersion>1.5</compilerVersion>
                 </configuration>
             </plugin>

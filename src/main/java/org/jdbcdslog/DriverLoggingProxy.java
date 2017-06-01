@@ -5,6 +5,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -111,4 +112,7 @@ public class DriverLoggingProxy implements Driver {
         return false;
     }
 
+	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new java.sql.SQLFeatureNotSupportedException("Method getParentLogger is not yet implemented");
+	}
 }

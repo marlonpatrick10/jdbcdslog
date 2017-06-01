@@ -1,5 +1,7 @@
 package org.jdbcdslog;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 public class DataSourceProxy extends DataSourceProxyBase implements DataSource {
@@ -8,6 +10,11 @@ public class DataSourceProxy extends DataSourceProxyBase implements DataSource {
 
     public DataSourceProxy() throws JDBCDSLogException {
         super();
+    }
+    
+    @Override
+    public Object unwrap(Class iface) throws SQLException {
+    	return super.unwrap(iface);
     }
 
 }

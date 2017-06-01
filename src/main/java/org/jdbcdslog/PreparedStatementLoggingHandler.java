@@ -18,7 +18,7 @@ public class PreparedStatementLoggingHandler implements InvocationHandler {
 
     static List setMethods = Arrays.asList(new String[] { "setAsciiStream", "setBigDecimal", "setBinaryStream", "setBoolean", "setByte", "setBytes", "setCharacterStream", "setDate", "setDouble", "setFloat", "setInt", "setLong", "setObject", "setShort", "setString", "setTime", "setTimestamp", "setURL" });
 
-    static List executeMethods = Arrays.asList(new String[] { "addBatch", "execute", "executeQuery", "executeUpdate" });
+    static List executeMethods = Arrays.asList(new String[] { "addBatch", "execute", "executeUpdate" });
 
     public PreparedStatementLoggingHandler(PreparedStatement ps, String sql) {
         target = ps;
@@ -30,6 +30,11 @@ public class PreparedStatementLoggingHandler implements InvocationHandler {
         try {
             long t1 = 0;
             boolean toLog = (StatementLogger.isInfoEnabled() || SlowQueryLogger.isInfoEnabled()) && executeMethods.contains(method.getName());
+            
+			if (!toLog) {
+				toLog = (ExecuteQueryStatementLogger.isInfoEnabled() && "executeQuery".equals(method.getName()));
+			}
+
             if (toLog)
                 t1 = System.currentTimeMillis();
             r = method.invoke(target, args);

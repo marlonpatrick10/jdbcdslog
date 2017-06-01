@@ -1,5 +1,7 @@
 package org.jdbcdslog;
 
+import java.sql.SQLException;
+
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
@@ -10,5 +12,9 @@ public class ConnectionPoolDataSourceProxy extends DataSourceProxyBase implement
     public ConnectionPoolDataSourceProxy() throws JDBCDSLogException {
         super();
     }
-
+    
+    @Override
+    public Object unwrap(Class iface) throws SQLException {
+    	return super.unwrap(iface);
+    }
 }

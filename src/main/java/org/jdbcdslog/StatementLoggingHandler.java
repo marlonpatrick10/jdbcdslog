@@ -11,7 +11,7 @@ public class StatementLoggingHandler implements InvocationHandler {
     Object targetStatement = null;
 
     @SuppressWarnings("rawtypes")
-    static List executeMethods = Arrays.asList(new String[] { "addBatch", "execute", "executeQuery", "executeUpdate" });
+    static List executeMethods = Arrays.asList(new String[] { "addBatch", "execute", "executeUpdate" });
 
     public StatementLoggingHandler(Statement statement) {
         targetStatement = statement;
@@ -21,6 +21,11 @@ public class StatementLoggingHandler implements InvocationHandler {
         Object r = null;
         try {
             boolean toLog = (StatementLogger.isInfoEnabled() || SlowQueryLogger.isInfoEnabled()) && executeMethods.contains(method.getName());
+            
+			if (!toLog) {
+				toLog = (ExecuteQueryStatementLogger.isInfoEnabled() && "executeQuery".equals(method.getName()));
+			}
+
             long t1 = 0;
             if (toLog)
                 t1 = System.currentTimeMillis();

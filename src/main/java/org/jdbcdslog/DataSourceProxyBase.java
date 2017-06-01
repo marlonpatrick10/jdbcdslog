@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -120,6 +121,15 @@ public class DataSourceProxyBase implements Serializable {
         else
             throw new SQLException("targetDS doesn't implement XADataSource interface.");
     }
+
+	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        if (targetDS == null)
+            throw new SQLFeatureNotSupportedException("targetDS parameter has not been passed to Database or URL property.");
+        if (targetDS instanceof XADataSource)
+        	return ((XADataSource) targetDS).getParentLogger();
+        else
+            throw new SQLFeatureNotSupportedException("targetDS doesn't implement XADataSource interface.");
+	}
 
     public PooledConnection getPooledConnection() throws SQLException {
         if (targetDS == null)
